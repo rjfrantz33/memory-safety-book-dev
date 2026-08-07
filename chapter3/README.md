@@ -43,7 +43,7 @@ Demo binaries:
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `bazel run //chapter3/demos:original`     | The bare recursive flood-fill on two grids. The 50x50 grid finishes; the 500x500 grid crashes with SIGSEGV. The crash is the chapter's argument, not a defect.                                                                              |
 | `bazel run //chapter3/demos:instrumented` | Same recursive algorithm with a depth observer that prints the maximum recursion depth reached and writes stderr breadcrumbs as the depth grows. The 500x500 grid still crashes; the depth output shows how far it got before being killed. |
-| `bazel run //chapter3/demos:solutions`    | All five Part II variants (Listings 3.4, 3.5, 3.6, 3.7, plus the BFS buffered companion) on a 50x50 grid, printing the status and labelled-cell count for each.                                                                             |
+| `bazel run //chapter3/demos:solutions`    | All five Part II variants (Listings 3.4, 3.5, 3.6, 3.7, plus the BFS buffered companion) on the same 500x500 fully occupied grid that crashes the recursive version. The four iterative variants label all 250,000 cells; Solution 1 stops at `kDepthLimitExceeded` after 65, which is the point of the depth bound. |
 
 ## MISRA C++ 2023 compliance
 

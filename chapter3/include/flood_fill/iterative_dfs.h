@@ -5,7 +5,7 @@
 /// No recursion. No dynamic allocation at call time. The worklist is a
 /// std::array<Coordinate, kMaxCells> declared as a function-local
 /// automatic variable, so it lives on the caller's stack frame. Per-call
-/// stack cost is therefore ~20 KB for kMaxCells = 2500. Chapter 3
+/// stack cost is therefore ~2 MB for kMaxCells = 250000. Chapter 3
 /// section 3.6.7 covers when that is and is not acceptable; for targets
 /// where it is not, see the caller-supplied buffer overload in
 /// flood_fill/iterative_dfs_buffered.h (Listing 3.6).

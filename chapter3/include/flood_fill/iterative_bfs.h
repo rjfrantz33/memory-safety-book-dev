@@ -12,7 +12,7 @@
 /// wavefront propagation, erosion/dilation) BFS gives "the nearest
 /// thing" for free.
 ///
-/// Storage placement and the per-call ~20 KB stack cost are identical
+/// Storage placement and the per-call ~2 MB stack cost are identical
 /// to flood_fill/iterative_dfs.h; see that header and section 3.6.7
 /// for the trade-off. The caller-supplied buffer overload lives in
 /// flood_fill/iterative_bfs_buffered.h.

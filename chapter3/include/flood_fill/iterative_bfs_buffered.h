@@ -9,7 +9,7 @@
 /// advances on each dequeue.
 ///
 /// Use this overload when more than one task may invoke the flood
-/// fill, or when the per-call ~20 KB stack frame of the function-local
+/// fill, or when the per-call ~2 MB stack frame of the function-local
 /// form does not fit the target stack budget.
 
 #ifndef CH3_FLOOD_FILL_ITERATIVE_BFS_BUFFERED_H

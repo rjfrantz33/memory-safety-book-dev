@@ -16,7 +16,7 @@
 namespace ch3 {
 
 /// @brief How often the depth instrumentation prints a progress line to stderr.
-constexpr int kDepthReportInterval = 1000;
+constexpr std::int32_t kDepthReportInterval = 1000;
 
 /// @brief Recursive flood-fill that reports depth to a caller-owned observer.
 ///
@@ -28,8 +28,8 @@ constexpr int kDepthReportInterval = 1000;
 /// @param cluster_id Label to stamp onto each visited occupied cell.
 /// @param obs Depth observer, passed through every recursive call.
 void floodFillInstrumented(OccupancyGrid& grid,
-                           int start_x,
-                           int start_y,
+                           std::int32_t start_x,
+                           std::int32_t start_y,
                            std::uint8_t cluster_id,
                            DepthObserver& obs);
 

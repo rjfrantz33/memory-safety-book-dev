@@ -7,7 +7,7 @@
 /// the WorklistBuffer instance lives is the caller's call: file-scope
 /// .bss, task-stack, or heap. Same recursion-elimination and
 /// capacity-bound properties as the function-local form in Listing
-/// 3.5; the per-call frame drops from ~20 KB to one reference, and
+/// 3.5; the per-call frame drops from ~2 MB to one reference, and
 /// the function is reentrant.
 
 #ifndef CH3_WORKLIST_BUFFER_H

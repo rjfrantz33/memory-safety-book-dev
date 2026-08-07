@@ -136,7 +136,7 @@ Chapter 3:
 | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `bazel run //chapter3/demos:original`     | Recursive flood-fill. The 50x50 grid finishes; the 500x500 grid crashes with SIGSEGV. **The crash is the chapter's argument.** |
 | `bazel run //chapter3/demos:instrumented` | Same algorithm with a depth observer showing how deep it got before being killed.                          |
-| `bazel run //chapter3/demos:solutions`    | All five Part II variants on a 50x50 grid, printing status and labelled-cell count for each.               |
+| `bazel run //chapter3/demos:solutions`    | All five Part II variants on the same 500x500 grid that crashes the recursive version. The four iterative ones label all 250,000 cells; bounded recursion stops at its depth limit. |
 
 Two of these crash on purpose. `//chapter2/demos:listing_2_1` and
 `//chapter3/demos:original` are counter-examples, and a non-zero exit is

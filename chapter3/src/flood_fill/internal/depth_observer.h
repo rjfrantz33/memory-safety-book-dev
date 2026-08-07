@@ -9,6 +9,8 @@
 #ifndef CH3_FLOOD_FILL_INTERNAL_DEPTH_OBSERVER_H
 #define CH3_FLOOD_FILL_INTERNAL_DEPTH_OBSERVER_H
 
+#include <cstdint>
+
 namespace ch3 {
 
 /// @brief Tracks current and maximum recursion depth observed so far.
@@ -31,10 +33,10 @@ class DepthObserver {
     void leave() { --current_; }
 
     /// @brief Current recursion depth.
-    [[nodiscard]] int current() const { return current_; }
+    [[nodiscard]] std::int32_t current() const { return current_; }
 
     /// @brief Maximum recursion depth observed since construction or last reset.
-    [[nodiscard]] int max() const { return max_; }
+    [[nodiscard]] std::int32_t max() const { return max_; }
 
     /// @brief Reset both counters to zero.
     void reset() {
@@ -43,8 +45,8 @@ class DepthObserver {
     }
 
    private:
-    int current_ = 0;
-    int max_ = 0;
+    std::int32_t current_ = 0;
+    std::int32_t max_ = 0;
 };
 
 }  // namespace ch3

@@ -38,28 +38,29 @@ FloodFillStatus floodFillBounded(OccupancyGrid& grid, // parasoft-suppress MISRA
     }
     cellAt(grid, start_x, start_y) = cluster_id;
 
-    const std::int32_t next_depth = depth + kNeighbourStep;
-    const std::int32_t x_east = start_x + kNeighbourStep;
-    const std::int32_t x_west = start_x - kNeighbourStep;
-    const std::int32_t y_south = start_y + kNeighbourStep;
-    const std::int32_t y_north = start_y - kNeighbourStep;
+    // The depth increment is 1, not kNeighbourStep. kNeighbourStep is a
+    // spatial offset to an adjacent cell; the two are equal today only by
+    // coincidence, and reusing it here would silently break the
+    // kMaxSafeDepth stack derivation if the neighbourhood ever changed.
+    const std::int32_t next_depth = depth + 1;
 
-    const FloodFillStatus s1 =
-        floodFillBounded(grid, x_east, start_y, cluster_id, next_depth);
+    const FloodFillStatus s1 = floodFillBounded(
+        grid, start_x + kNeighbourStep, start_y, cluster_id, next_depth);
     if (s1 == FloodFillStatus::kDepthLimitExceeded) {
         return s1;
     }
-    const FloodFillStatus s2 =
-        floodFillBounded(grid, x_west, start_y, cluster_id, next_depth);
+    const FloodFillStatus s2 = floodFillBounded(
+        grid, start_x - kNeighbourStep, start_y, cluster_id, next_depth);
     if (s2 == FloodFillStatus::kDepthLimitExceeded) {
         return s2;
     }
-    const FloodFillStatus s3 =
-        floodFillBounded(grid, start_x, y_south, cluster_id, next_depth);
+    const FloodFillStatus s3 = floodFillBounded(
+        grid, start_x, start_y + kNeighbourStep, cluster_id, next_depth);
     if (s3 == FloodFillStatus::kDepthLimitExceeded) {
         return s3;
     }
-    return floodFillBounded(grid, start_x, y_north, cluster_id, next_depth);
+    return floodFillBounded(
+        grid, start_x, start_y - kNeighbourStep, cluster_id, next_depth);
 }
 
 }  // namespace ch3

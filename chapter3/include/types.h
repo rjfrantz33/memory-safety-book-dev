@@ -43,7 +43,14 @@ constexpr std::int32_t kLargeGridSize = 500;
 ///
 /// The worklist must hold at most one entry per cell, so the tight
 /// worst-case bound is kMaxCells = kGridSize * kGridSize.
-constexpr std::int32_t kGridSize = 50;
+///
+/// This tracks kLargeGridSize, not kSmallGridSize: the chapter's worst
+/// case is the 500x500 fully occupied grid, and a worklist sized for
+/// anything smaller returns kWorklistFull on the very input the
+/// solutions exist to survive. At 500 the worklist is 250,000 entries,
+/// 2 MB at 8 bytes per Coordinate, which is the figure section 3.6.5
+/// weighs against a 4 KB task budget.
+constexpr std::int32_t kGridSize = kLargeGridSize;
 
 /// @brief Maximum number of cells in the worklist (kGridSize^2).
 constexpr std::int32_t kMaxCells = kGridSize * kGridSize;
