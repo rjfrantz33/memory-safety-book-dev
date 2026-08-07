@@ -24,11 +24,11 @@
 #include <iostream>
 
 int main() {
-  int buffer[10];
+    int buffer[10];
 
-  buffer[15] = 42;         // Out-of-bounds write: undefined behaviour.
-  int value = buffer[-1];  // Out-of-bounds read: undefined behaviour.
+    buffer[15] = 42;         // Out-of-bounds write: undefined behaviour.
+    int value = buffer[-1];  // Out-of-bounds read: undefined behaviour.
 
-  std::cout << "Value: " << value << "\n";
-  return 0;
+    std::cout << "Value: " << value << "\n";
+    return 0;
 }

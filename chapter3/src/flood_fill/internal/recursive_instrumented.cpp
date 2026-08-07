@@ -18,33 +18,34 @@ namespace ch3 {
 // suppression stays.
 // NOLINTNEXTLINE(misc-no-recursion)
 void floodFillInstrumented(OccupancyGrid& grid,
-                           int x, int y,
+                           int start_x,
+                           int start_y,
                            std::uint8_t cluster_id,
                            DepthObserver& obs) {
     const int prev_max = obs.max();
     obs.enter();
     const int new_max = obs.max();
 
-    if (new_max > prev_max &&
-        new_max % kDepthReportInterval == 0) {
+    if (new_max > prev_max && new_max % kDepthReportInterval == 0) {
         std::cerr << "[depth " << new_max << "]\n";
     }
 
-    if (x < 0 || x >= grid.width || y < 0 || y >= grid.height) {
+    if (start_x < 0 || start_x >= grid.width || start_y < 0 ||
+        start_y >= grid.height) {
         obs.leave();
         return;
     }
-    if (cellAt(grid, x, y) != kCellOccupied) {
+    if (cellAt(grid, start_x, start_y) != kCellOccupied) {
         obs.leave();
         return;
     }
 
-    cellAt(grid, x, y) = cluster_id;
+    cellAt(grid, start_x, start_y) = cluster_id;
 
-    floodFillInstrumented(grid, x + 1, y, cluster_id, obs);
-    floodFillInstrumented(grid, x - 1, y, cluster_id, obs);
-    floodFillInstrumented(grid, x, y + 1, cluster_id, obs);
-    floodFillInstrumented(grid, x, y - 1, cluster_id, obs);
+    floodFillInstrumented(grid, start_x + 1, start_y, cluster_id, obs);
+    floodFillInstrumented(grid, start_x - 1, start_y, cluster_id, obs);
+    floodFillInstrumented(grid, start_x, start_y + 1, cluster_id, obs);
+    floodFillInstrumented(grid, start_x, start_y - 1, cluster_id, obs);
 
     obs.leave();
 }

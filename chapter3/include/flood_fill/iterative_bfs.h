@@ -36,9 +36,9 @@ namespace ch3 {
 /// @return FloodFillStatus::kCompleted if the full region was labelled,
 ///         FloodFillStatus::kWorklistFull if the queue capacity was exceeded.
 FloodFillStatus floodFillIterativeBFS(OccupancyGrid& grid,
-                                               std::int32_t start_x,
-                                               std::int32_t start_y,
-                                               std::uint8_t cluster_id);
+                                      std::int32_t start_x,
+                                      std::int32_t start_y,
+                                      std::uint8_t cluster_id);
 
 }  // namespace ch3
 

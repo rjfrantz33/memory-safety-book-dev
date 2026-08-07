@@ -17,21 +17,23 @@ namespace ch3 {
 // codebase you find exactly the functions the chapter is criticising.
 // NOLINTNEXTLINE(misc-no-recursion)
 void floodFill(OccupancyGrid& grid,
-               std::int32_t x, std::int32_t y,
+               std::int32_t start_x,
+               std::int32_t start_y,
                std::uint8_t cluster_id) {
-    if (x < 0 || x >= grid.width || y < 0 || y >= grid.height) {
+    if (start_x < 0 || start_x >= grid.width || start_y < 0 ||
+        start_y >= grid.height) {
         return;
     }
-    if (cellAt(grid, x, y) != kCellOccupied) {
+    if (cellAt(grid, start_x, start_y) != kCellOccupied) {
         return;
     }
 
-    cellAt(grid, x, y) = cluster_id;
+    cellAt(grid, start_x, start_y) = cluster_id;
 
-    floodFill(grid, x + 1, y, cluster_id);
-    floodFill(grid, x - 1, y, cluster_id);
-    floodFill(grid, x, y + 1, cluster_id);
-    floodFill(grid, x, y - 1, cluster_id);
+    floodFill(grid, start_x + 1, start_y, cluster_id);
+    floodFill(grid, start_x - 1, start_y, cluster_id);
+    floodFill(grid, start_x, start_y + 1, cluster_id);
+    floodFill(grid, start_x, start_y - 1, cluster_id);
 }
 
 }  // namespace ch3

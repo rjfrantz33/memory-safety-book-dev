@@ -31,11 +31,12 @@ namespace ch3 {
 /// @param start_y Starting row index.
 /// @param cluster_id Label to stamp onto each visited occupied cell.
 /// @return FloodFillStatus::kCompleted if the full region was labelled,
-///         FloodFillStatus::kWorklistFull if the worklist capacity was exceeded.
+///         FloodFillStatus::kWorklistFull if the worklist capacity was
+///         exceeded.
 FloodFillStatus floodFillIterativeDFS(OccupancyGrid& grid,
-                                               std::int32_t start_x,
-                                               std::int32_t start_y,
-                                               std::uint8_t cluster_id);
+                                      std::int32_t start_x,
+                                      std::int32_t start_y,
+                                      std::uint8_t cluster_id);
 
 }  // namespace ch3
 

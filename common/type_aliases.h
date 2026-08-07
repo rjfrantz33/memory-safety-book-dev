@@ -14,7 +14,8 @@ namespace common {
 /// Boundary alias for std::ostream operator<<(int) and similar.
 /// MISRA C++ 2023 Rule 6.9.2 exception #1.
 using OstreamInt = int;
-static_assert(sizeof(OstreamInt) >= 4);  // Rule 6.9.2 rationale: validate width.
+static_assert(sizeof(OstreamInt) >=
+              4);  // Rule 6.9.2 rationale: validate width.
 
 }  // namespace common
 

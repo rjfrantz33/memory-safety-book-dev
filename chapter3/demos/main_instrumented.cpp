@@ -22,29 +22,24 @@ int main() {
     {
         std::cout << "Small run: " << ch3::kSmallGridSize << " x "
                   << ch3::kSmallGridSize << " fully occupied grid\n";
-        ch3::OccupancyGrid small_grid =
-            ch3::makeFullyOccupiedGrid(ch3::kSmallGridSize,
-                                       ch3::kSmallGridSize);
+        ch3::OccupancyGrid small_grid = ch3::makeFullyOccupiedGrid(
+            ch3::kSmallGridSize, ch3::kSmallGridSize);
         ch3::DepthObserver obs;
-        ch3::floodFillInstrumented(small_grid, 0, 0,
-                                   ch3::kFirstClusterId, obs);
-        std::cout << "  max recursion depth reached: "
-                  << obs.max() << "\n\n";
+        ch3::floodFillInstrumented(small_grid, 0, 0, ch3::kFirstClusterId, obs);
+        std::cout << "  max recursion depth reached: " << obs.max() << "\n\n";
     }
 
     // Large run: does not finish on a machine with a default user stack.
     {
         std::cout << "Large run: " << ch3::kLargeGridSize << " x "
                   << ch3::kLargeGridSize << " fully occupied grid\n";
-        std::cout << "(expect a crash; watch stderr for the last depth printed)\n";
-        ch3::OccupancyGrid large_grid =
-            ch3::makeFullyOccupiedGrid(ch3::kLargeGridSize,
-                                       ch3::kLargeGridSize);
+        std::cout
+            << "(expect a crash; watch stderr for the last depth printed)\n";
+        ch3::OccupancyGrid large_grid = ch3::makeFullyOccupiedGrid(
+            ch3::kLargeGridSize, ch3::kLargeGridSize);
         ch3::DepthObserver obs;
-        ch3::floodFillInstrumented(large_grid, 0, 0,
-                                   ch3::kFirstClusterId, obs);
-        std::cout << "  max recursion depth reached: "
-                  << obs.max() << "\n";
+        ch3::floodFillInstrumented(large_grid, 0, 0, ch3::kFirstClusterId, obs);
+        std::cout << "  max recursion depth reached: " << obs.max() << "\n";
     }
 
     return 0;

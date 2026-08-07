@@ -18,14 +18,14 @@ namespace ch3 {
 std::uint8_t& cellAt(OccupancyGrid& grid, std::int32_t x, std::int32_t y) {
     const std::size_t idx =
         ((static_cast<std::size_t>(x) * static_cast<std::size_t>(grid.height)) +
-        (static_cast<std::size_t>(y)));
+         (static_cast<std::size_t>(y)));
     return grid.cells[idx];
 }
 
 std::uint8_t cellAt(const OccupancyGrid& grid, std::int32_t x, std::int32_t y) {
-    const std::size_t idx =
-        ((static_cast<std::size_t>(x)) * static_cast<std::size_t>(grid.height)) +
-        (static_cast<std::size_t>(y));
+    const std::size_t idx = ((static_cast<std::size_t>(x)) *
+                             static_cast<std::size_t>(grid.height)) +
+                            (static_cast<std::size_t>(y));
     return grid.cells[idx];
 }
 
@@ -33,9 +33,7 @@ OccupancyGrid makeFullyOccupiedGrid(std::int32_t width, std::int32_t height) {
     const std::size_t cell_count =
         static_cast<std::size_t>(width) * static_cast<std::size_t>(height);
     return OccupancyGrid{
-        width,
-        height,
-        std::vector<std::uint8_t>(cell_count, kCellOccupied)};
+        width, height, std::vector<std::uint8_t>(cell_count, kCellOccupied)};
 }
 
 std::int32_t countLabelled(const OccupancyGrid& grid, std::uint8_t cluster_id) {

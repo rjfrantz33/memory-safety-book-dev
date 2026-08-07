@@ -12,9 +12,9 @@
 #include <memory>
 
 int main() {
-  auto ptr = std::make_unique<int>(42);
+    auto ptr = std::make_unique<int>(42);
 
-  int value = *ptr;  // Safe: ptr still owns a live object.
-  std::cout << value << "\n";
-  return 0;
+    int value = *ptr;  // Safe: ptr still owns a live object.
+    std::cout << value << "\n";
+    return 0;
 }  // ptr goes out of scope and frees the integer.

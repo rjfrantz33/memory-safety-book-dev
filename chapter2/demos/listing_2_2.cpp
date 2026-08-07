@@ -14,13 +14,13 @@
 #include <iostream>
 
 int main() {
-  std::array<int, 10> buffer{};
-  std::size_t index = 15;
+    std::array<int, 10> buffer{};
+    std::size_t index = 15;
 
-  if (index < buffer.size()) {
-    buffer[index] = 42;
-  } else {
-    std::cerr << "Index " << index << " out of bounds\n";
-  }
-  return 0;
+    if (index < buffer.size()) {
+        buffer[index] = 42;
+    } else {
+        std::cerr << "Index " << index << " out of bounds\n";
+    }
+    return 0;
 }

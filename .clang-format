@@ -8,6 +8,16 @@
 
 BasedOnStyle: Google
 
+# Four-space indent, not Google's two. Matches the listings as the book
+# prints them. Without this the formatter reindents every file in the
+# repo, which is most of what it used to flag.
+IndentWidth: 4
+
+# One parameter per line once a signature wraps, rather than packing as
+# many as fit. Matches existing code and keeps signature diffs readable.
+BinPackParameters: false
+BinPackArguments: false
+
 # `int& foo` not `int &foo`. Matches existing code.
 DerivePointerAlignment: false
 PointerAlignment: Left

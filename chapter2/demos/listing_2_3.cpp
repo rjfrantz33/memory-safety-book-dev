@@ -17,10 +17,10 @@
 #include <iostream>
 
 int main() {
-  int* ptr = new int(42);
-  delete ptr;  // The object is gone; ptr still holds its address.
+    int* ptr = new int(42);
+    delete ptr;  // The object is gone; ptr still holds its address.
 
-  int value = *ptr;  // Use-after-free: undefined behaviour.
-  std::cout << value << "\n";
-  return 0;
+    int value = *ptr;  // Use-after-free: undefined behaviour.
+    std::cout << value << "\n";
+    return 0;
 }

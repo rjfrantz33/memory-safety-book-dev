@@ -1,6 +1,7 @@
+#include "flood_fill/iterative_dfs.h"
+
 #include <gtest/gtest.h>
 
-#include "flood_fill/iterative_dfs.h"
 #include "occupancy_grid.h"
 #include "types.h"
 
@@ -14,7 +15,8 @@ TEST(FloodFillIterativeDFS, CompletesFullGrid) {
 
 TEST(FloodFillIterativeDFS, OutOfBoundsStartReturnsCompleted) {
     auto grid = ch3::makeFullyOccupiedGrid(5, 5);
-    auto status = ch3::floodFillIterativeDFS(grid, 10, 10, ch3::kFirstClusterId);
+    auto status =
+        ch3::floodFillIterativeDFS(grid, 10, 10, ch3::kFirstClusterId);
     EXPECT_EQ(status, ch3::FloodFillStatus::kCompleted);
 }
 

@@ -18,8 +18,9 @@ namespace ch3 {
 /// A cell is either free, occupied, or has been stamped with a cluster id.
 /// Cluster ids start at kFirstClusterId and count up.
 /// @{
-constexpr std::uint8_t kCellFree       = 0;  ///< Cell is unoccupied.
-constexpr std::uint8_t kCellOccupied   = 1;  ///< Cell is occupied but not yet labelled.
+constexpr std::uint8_t kCellFree = 0;  ///< Cell is unoccupied.
+constexpr std::uint8_t kCellOccupied =
+    1;  ///< Cell is occupied but not yet labelled.
 constexpr std::uint8_t kFirstClusterId = 2;  ///< First valid cluster label.
 /// @}
 
@@ -72,8 +73,9 @@ struct Coordinate {
 /// of a status return is a deliberate decision.
 enum class FloodFillStatus : std::uint8_t {
     kCompleted,           ///< The connected region was fully labelled.
-    kDepthLimitExceeded,  ///< Recursion hit kMaxSafeDepth; region partially labelled.
-    kWorklistFull,        ///< Worklist capacity exceeded; region partially labelled.
+    kDepthLimitExceeded,  ///< Recursion hit kMaxSafeDepth; region partially
+                          ///< labelled.
+    kWorklistFull,  ///< Worklist capacity exceeded; region partially labelled.
 };
 
 }  // namespace ch3

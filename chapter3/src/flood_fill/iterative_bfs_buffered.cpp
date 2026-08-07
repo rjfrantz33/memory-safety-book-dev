@@ -33,12 +33,15 @@ FloodFillStatus floodFillIterativeBFS(OccupancyGrid& grid,
 
     while (head < buffer.top) {
         const Coordinate c = buffer.data[head++];  // dequeue -> BFS order
-        constexpr std::array<std::int32_t, 4> kDxs = {kNeighbourStep, -kNeighbourStep, 0, 0};
-        constexpr std::array<std::int32_t, 4> kDys = {0, 0, kNeighbourStep, -kNeighbourStep};
+        constexpr std::array<std::int32_t, 4> kDxs = {
+            kNeighbourStep, -kNeighbourStep, 0, 0};
+        constexpr std::array<std::int32_t, 4> kDys = {
+            0, 0, kNeighbourStep, -kNeighbourStep};
         for (std::size_t i = 0; i < kDxs.size(); ++i) {
             const std::int32_t nx = c.x + kDxs[i];
             const std::int32_t ny = c.y + kDys[i];
-            if (((nx < 0) || (nx >= grid.width)) || ((ny < 0) || (ny >= grid.height))) {
+            if (((nx < 0) || (nx >= grid.width)) ||
+                ((ny < 0) || (ny >= grid.height))) {
                 continue;
             }
             if (cellAt(grid, nx, ny) != kCellOccupied) {

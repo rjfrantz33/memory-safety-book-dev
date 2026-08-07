@@ -23,12 +23,13 @@ constexpr int kDepthReportInterval = 1000;
 /// @warning Same crash semantics as `floodFill`. Demo only.
 ///
 /// @param grid The occupancy grid to label in-place.
-/// @param x Starting column index.
-/// @param y Starting row index.
+/// @param start_x Starting column index.
+/// @param start_y Starting row index.
 /// @param cluster_id Label to stamp onto each visited occupied cell.
 /// @param obs Depth observer, passed through every recursive call.
 void floodFillInstrumented(OccupancyGrid& grid,
-                           int x, int y,
+                           int start_x,
+                           int start_y,
                            std::uint8_t cluster_id,
                            DepthObserver& obs);
 

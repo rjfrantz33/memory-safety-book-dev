@@ -29,10 +29,13 @@ namespace ch3 {
 ///          overruns the stack guard page.
 ///
 /// @param grid The occupancy grid to label in-place.
-/// @param x Starting column index.
-/// @param y Starting row index.
+/// @param start_x Starting column index.
+/// @param start_y Starting row index.
 /// @param cluster_id Label to stamp onto each visited occupied cell.
-void floodFill(OccupancyGrid& grid, std::int32_t x, std::int32_t y, std::uint8_t cluster_id);
+void floodFill(OccupancyGrid& grid,
+               std::int32_t start_x,
+               std::int32_t start_y,
+               std::uint8_t cluster_id);
 
 }  // namespace ch3
 

@@ -22,9 +22,10 @@ namespace ch3 {
 /// All flood-fill variants operate on this struct. Fields are public
 /// because OccupancyGrid is a POD aggregate by design.
 struct OccupancyGrid {
-    std::int32_t width;               ///< Number of columns.
-    std::int32_t height;              ///< Number of rows.
-    std::vector<std::uint8_t> cells;  ///< Flat row-major cell storage (width_ * height_ elements).
+    std::int32_t width;   ///< Number of columns.
+    std::int32_t height;  ///< Number of rows.
+    std::vector<std::uint8_t>
+        cells;  ///< Flat row-major cell storage (width_ * height_ elements).
 };
 
 /// @brief Mutable element accessor using row-major indexing.

@@ -33,10 +33,10 @@ namespace ch3 {
 /// @return FloodFillStatus::kCompleted if the full region was labelled,
 ///         FloodFillStatus::kWorklistFull if the buffer capacity was exceeded.
 FloodFillStatus floodFillIterativeDFS(OccupancyGrid& grid,
-                                                    std::int32_t start_x,
-                                                    std::int32_t start_y,
-                                                    std::uint8_t cluster_id,
-                                                    WorklistBuffer& buffer);
+                                      std::int32_t start_x,
+                                      std::int32_t start_y,
+                                      std::uint8_t cluster_id,
+                                      WorklistBuffer& buffer);
 
 }  // namespace ch3
 

@@ -1,14 +1,15 @@
+#include "flood_fill/recursive.h"
+
 #include <gtest/gtest.h>
 
 #include "flood_fill/internal/depth_observer.h"
 #include "flood_fill/internal/recursive_instrumented.h"
-#include "flood_fill/recursive.h"
 #include "occupancy_grid.h"
 #include "types.h"
 
 TEST(FloodFillRecursive, SmallGridCompletes) {
-    auto grid = ch3::makeFullyOccupiedGrid(ch3::kSmallGridSize,
-                                           ch3::kSmallGridSize);
+    auto grid =
+        ch3::makeFullyOccupiedGrid(ch3::kSmallGridSize, ch3::kSmallGridSize);
     ch3::floodFill(grid, 0, 0, ch3::kFirstClusterId);
 
     const int expected = ch3::kSmallGridSize * ch3::kSmallGridSize;

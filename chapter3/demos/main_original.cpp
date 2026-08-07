@@ -1,7 +1,8 @@
 // Demo driver for the original recursive flood-fill (defective).
 //
 // Two runs:
-//   1. kSmallGridSize x kSmallGridSize fully-occupied grid -> finishes silently.
+//   1. kSmallGridSize x kSmallGridSize fully-occupied grid -> finishes
+//   silently.
 //   2. kLargeGridSize x kLargeGridSize fully-occupied grid -> on a default
 //      8 MB Linux user stack at -O2, the process is killed by SIGSEGV.
 //
@@ -19,9 +20,8 @@ int main() {
     {
         std::cout << "Small run: " << ch3::kSmallGridSize << " x "
                   << ch3::kSmallGridSize << " fully occupied grid\n";
-        ch3::OccupancyGrid small_grid =
-            ch3::makeFullyOccupiedGrid(ch3::kSmallGridSize,
-                                       ch3::kSmallGridSize);
+        ch3::OccupancyGrid small_grid = ch3::makeFullyOccupiedGrid(
+            ch3::kSmallGridSize, ch3::kSmallGridSize);
         ch3::floodFill(small_grid, 0, 0, ch3::kFirstClusterId);
         std::cout << "  completed successfully\n\n";
     }
@@ -30,9 +30,8 @@ int main() {
         std::cout << "Large run: " << ch3::kLargeGridSize << " x "
                   << ch3::kLargeGridSize << " fully occupied grid\n"
                   << std::flush;
-        ch3::OccupancyGrid large_grid =
-            ch3::makeFullyOccupiedGrid(ch3::kLargeGridSize,
-                                       ch3::kLargeGridSize);
+        ch3::OccupancyGrid large_grid = ch3::makeFullyOccupiedGrid(
+            ch3::kLargeGridSize, ch3::kLargeGridSize);
         ch3::floodFill(large_grid, 0, 0, ch3::kFirstClusterId);
         std::cout << "  completed successfully\n";
     }

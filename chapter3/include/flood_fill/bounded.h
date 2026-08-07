@@ -48,16 +48,17 @@ inline constexpr std::int32_t kMaxSafeDepth = 64;
 /// @brief Recursively label a connected region with a depth bound.
 ///
 /// @param grid The occupancy grid to label in-place.
-/// @param x Starting column index.
-/// @param y Starting row index.
+/// @param start_x Starting column index.
+/// @param start_y Starting row index.
 /// @param cluster_id Label to stamp onto each visited occupied cell.
 /// @param depth Current recursion depth (pass 0 at the top-level call).
 /// @return FloodFillStatus::kCompleted if the full region was labelled,
 ///         FloodFillStatus::kDepthLimitExceeded if the depth bound was hit.
 FloodFillStatus floodFillBounded(OccupancyGrid& grid,
-                                               std::int32_t x, std::int32_t y,
-                                               std::uint8_t cluster_id,
-                                               std::int32_t depth);
+                                 std::int32_t start_x,
+                                 std::int32_t start_y,
+                                 std::uint8_t cluster_id,
+                                 std::int32_t depth);
 
 }  // namespace ch3
 

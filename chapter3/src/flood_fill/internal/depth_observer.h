@@ -18,7 +18,7 @@ namespace ch3 {
 /// returns (or is observed externally after a crash), max() reports
 /// the high-water mark.
 class DepthObserver {
-public:
+   public:
     /// @brief Increment current depth and update max if exceeded.
     void enter() {
         ++current_;
@@ -28,9 +28,7 @@ public:
     }
 
     /// @brief Decrement current depth.
-    void leave() {
-        --current_;
-    }
+    void leave() { --current_; }
 
     /// @brief Current recursion depth.
     [[nodiscard]] int current() const { return current_; }
@@ -41,12 +39,12 @@ public:
     /// @brief Reset both counters to zero.
     void reset() {
         current_ = 0;
-        max_     = 0;
+        max_ = 0;
     }
 
-private:
+   private:
     int current_ = 0;
-    int max_     = 0;
+    int max_ = 0;
 };
 
 }  // namespace ch3

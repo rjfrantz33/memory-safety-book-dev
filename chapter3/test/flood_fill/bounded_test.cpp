@@ -1,6 +1,7 @@
+#include "flood_fill/bounded.h"
+
 #include <gtest/gtest.h>
 
-#include "flood_fill/bounded.h"
 #include "occupancy_grid.h"
 #include "types.h"
 

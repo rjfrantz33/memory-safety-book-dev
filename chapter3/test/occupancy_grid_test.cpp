@@ -1,6 +1,7 @@
+#include "occupancy_grid.h"
+
 #include <gtest/gtest.h>
 
-#include "occupancy_grid.h"
 #include "types.h"
 
 TEST(OccupancyGrid, MakeFullyOccupied) {

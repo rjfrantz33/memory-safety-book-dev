@@ -7,8 +7,8 @@
 //
 // Expected output (verified at -O2 on a Linux x86-64 workstation):
 //
-//   Solution 1 (bounded recursion, limit=64) on 50x50: DepthLimitExceeded, labelled=65
-//   Solution 2 (iterative DFS) on 50x50: Completed, labelled=2500
+//   Solution 1 (bounded recursion, limit=64) on 50x50: DepthLimitExceeded,
+//   labelled=65 Solution 2 (iterative DFS) on 50x50: Completed, labelled=2500
 //   Solution 2b (iterative DFS, buffered) on 50x50: Completed, labelled=2500
 //   Solution 3 (iterative BFS) on 50x50: Completed, labelled=2500
 //   Solution 3b (iterative BFS, buffered) on 50x50: Completed, labelled=2500
@@ -37,10 +37,18 @@ namespace {
 
 std::string_view statusName(ch3::FloodFillStatus s) {
     switch (s) {
-        case ch3::FloodFillStatus::kCompleted:           { return "Completed"; }
-        case ch3::FloodFillStatus::kDepthLimitExceeded:  { return "DepthLimitExceeded"; }
-        case ch3::FloodFillStatus::kWorklistFull:        { return "WorklistFull"; }
-        default:                                         { return "Unknown"; }
+        case ch3::FloodFillStatus::kCompleted: {
+            return "Completed";
+        }
+        case ch3::FloodFillStatus::kDepthLimitExceeded: {
+            return "DepthLimitExceeded";
+        }
+        case ch3::FloodFillStatus::kWorklistFull: {
+            return "WorklistFull";
+        }
+        default: {
+            return "Unknown";
+        }
     }
 }
 
@@ -55,12 +63,12 @@ int main() try {
             ch3::makeFullyOccupiedGrid(ch3::kGridSize, ch3::kGridSize);
         const auto s = ch3::floodFillBounded(g, 0, 0, ch3::kFirstClusterId, 0);
         std::cout << "Solution 1 (bounded recursion, limit="
-                  << static_cast<common::OstreamInt>(ch3::kMaxSafeDepth) << ") on "
-                  << static_cast<common::OstreamInt>(ch3::kGridSize) << "x"
-                  << static_cast<common::OstreamInt>(ch3::kGridSize) << ": "
-                  << statusName(s)
-                  << ", labelled="
-                  << static_cast<common::OstreamInt>(ch3::countLabelled(g, ch3::kFirstClusterId))
+                  << static_cast<common::OstreamInt>(ch3::kMaxSafeDepth)
+                  << ") on " << static_cast<common::OstreamInt>(ch3::kGridSize)
+                  << "x" << static_cast<common::OstreamInt>(ch3::kGridSize)
+                  << ": " << statusName(s) << ", labelled="
+                  << static_cast<common::OstreamInt>(
+                         ch3::countLabelled(g, ch3::kFirstClusterId))
                   << "\n";
     }
 
@@ -68,13 +76,14 @@ int main() try {
     {
         ch3::OccupancyGrid g =
             ch3::makeFullyOccupiedGrid(ch3::kGridSize, ch3::kGridSize);
-        const auto s = ch3::floodFillIterativeDFS(g, 0, 0, ch3::kFirstClusterId);
+        const auto s =
+            ch3::floodFillIterativeDFS(g, 0, 0, ch3::kFirstClusterId);
         std::cout << "Solution 2 (iterative DFS) on "
                   << static_cast<common::OstreamInt>(ch3::kGridSize) << "x"
                   << static_cast<common::OstreamInt>(ch3::kGridSize) << ": "
-                  << statusName(s)
-                  << ", labelled="
-                  << static_cast<common::OstreamInt>(ch3::countLabelled(g, ch3::kFirstClusterId))
+                  << statusName(s) << ", labelled="
+                  << static_cast<common::OstreamInt>(
+                         ch3::countLabelled(g, ch3::kFirstClusterId))
                   << "\n";
     }
 
@@ -84,13 +93,14 @@ int main() try {
         ch3::OccupancyGrid g =
             ch3::makeFullyOccupiedGrid(ch3::kGridSize, ch3::kGridSize);
         ch3::WorklistBuffer buffer{};
-        const auto s = ch3::floodFillIterativeDFS(g, 0, 0, ch3::kFirstClusterId, buffer);
+        const auto s =
+            ch3::floodFillIterativeDFS(g, 0, 0, ch3::kFirstClusterId, buffer);
         std::cout << "Solution 2b (iterative DFS, buffered) on "
                   << static_cast<common::OstreamInt>(ch3::kGridSize) << "x"
                   << static_cast<common::OstreamInt>(ch3::kGridSize) << ": "
-                  << statusName(s)
-                  << ", labelled="
-                  << static_cast<common::OstreamInt>(ch3::countLabelled(g, ch3::kFirstClusterId))
+                  << statusName(s) << ", labelled="
+                  << static_cast<common::OstreamInt>(
+                         ch3::countLabelled(g, ch3::kFirstClusterId))
                   << "\n";
     }
 
@@ -98,13 +108,14 @@ int main() try {
     {
         ch3::OccupancyGrid g =
             ch3::makeFullyOccupiedGrid(ch3::kGridSize, ch3::kGridSize);
-        const auto s = ch3::floodFillIterativeBFS(g, 0, 0, ch3::kFirstClusterId);
+        const auto s =
+            ch3::floodFillIterativeBFS(g, 0, 0, ch3::kFirstClusterId);
         std::cout << "Solution 3 (iterative BFS) on "
                   << static_cast<common::OstreamInt>(ch3::kGridSize) << "x"
                   << static_cast<common::OstreamInt>(ch3::kGridSize) << ": "
-                  << statusName(s)
-                  << ", labelled="
-                  << static_cast<common::OstreamInt>(ch3::countLabelled(g, ch3::kFirstClusterId))
+                  << statusName(s) << ", labelled="
+                  << static_cast<common::OstreamInt>(
+                         ch3::countLabelled(g, ch3::kFirstClusterId))
                   << "\n";
     }
 
@@ -113,13 +124,14 @@ int main() try {
         ch3::OccupancyGrid g =
             ch3::makeFullyOccupiedGrid(ch3::kGridSize, ch3::kGridSize);
         ch3::WorklistBuffer buffer{};
-        const auto s = ch3::floodFillIterativeBFS(g, 0, 0, ch3::kFirstClusterId, buffer);
+        const auto s =
+            ch3::floodFillIterativeBFS(g, 0, 0, ch3::kFirstClusterId, buffer);
         std::cout << "Solution 3b (iterative BFS, buffered) on "
                   << static_cast<common::OstreamInt>(ch3::kGridSize) << "x"
                   << static_cast<common::OstreamInt>(ch3::kGridSize) << ": "
-                  << statusName(s)
-                  << ", labelled="
-                  << static_cast<common::OstreamInt>(ch3::countLabelled(g, ch3::kFirstClusterId))
+                  << statusName(s) << ", labelled="
+                  << static_cast<common::OstreamInt>(
+                         ch3::countLabelled(g, ch3::kFirstClusterId))
                   << "\n";
     }
 

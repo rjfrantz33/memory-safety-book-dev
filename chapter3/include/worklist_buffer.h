@@ -23,8 +23,9 @@ namespace ch3 {
 /// @brief Caller-owned worklist storage used by the buffered iterative
 ///        flood-fill overloads.
 struct WorklistBuffer {
-    std::array<Coordinate, kMaxCells> data;  ///< Underlying storage for cells to visit.
-    std::size_t top;                          ///< Index of the next free slot.
+    std::array<Coordinate, kMaxCells>
+        data;         ///< Underlying storage for cells to visit.
+    std::size_t top;  ///< Index of the next free slot.
 };
 
 }  // namespace ch3

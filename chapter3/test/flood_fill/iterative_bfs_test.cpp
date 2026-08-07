@@ -1,6 +1,7 @@
+#include "flood_fill/iterative_bfs.h"
+
 #include <gtest/gtest.h>
 
-#include "flood_fill/iterative_bfs.h"
 #include "flood_fill/iterative_dfs.h"
 #include "occupancy_grid.h"
 #include "types.h"
