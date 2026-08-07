@@ -66,6 +66,21 @@ build:windows --cxxopt=/permissive-
 # as system headers.
 build:windows --cxxopt=/external:W0
 
+# Reserve an 8 MB stack, matching the Linux and macOS defaults.
+#
+# Chapter 3's Solutions 2 and 3 declare the worklist as a function-local
+# std::array<Coordinate, kMaxCells>. At the chapter's 500x500 worst case
+# that is 250,000 entries, ~1.91 MB, sitting in one stack frame. Linux
+# and macOS give the main thread 8 MB by default and absorb it; Windows
+# reserves 1 MB, so the same code aborts with STATUS_STACK_OVERFLOW
+# (0xC00000FD) the moment the frame is set up.
+#
+# That difference is the chapter's own argument playing out across
+# hosts, not a defect in the sample. Raising the reservation keeps the
+# listings identical on all three platforms rather than shrinking the
+# worklist below the worst case it exists to cover.
+build:windows --linkopt=/STACK:8388608
+
 # clang-tidy: run with `bazel build //... --config=clang-tidy`
 build:clang-tidy --aspects @bazel_clang_tidy//clang_tidy:clang_tidy.bzl%clang_tidy_aspect
 build:clang-tidy --output_groups=report
