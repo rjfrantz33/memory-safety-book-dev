@@ -26,13 +26,22 @@ types or library code behind it, so there is no `include/`, `src/`, or
 
 ## Listings and their targets
 
-| Listing | Description                                     | Where it lives in the repo         |
-| ------- | ----------------------------------------------- | ---------------------------------- |
-| 2.1     | Spatial violation: writing beyond buffer bounds | `chapter2/demos/listing_2_1.cpp` |
-| 2.2     | Bounds checking to prevent spatial violations   | `chapter2/demos/listing_2_2.cpp` |
-| 2.3     | Temporal violation: accessing freed memory      | `chapter2/demos/listing_2_3.cpp` |
-| 2.4     | Smart pointers to prevent temporal violations   | `chapter2/demos/listing_2_4.cpp` |
-| 2.5     | Combining spatial and temporal checks           | `chapter2/demos/listing_2_5.cpp` |
+| Listing | Description                                     | Where it lives in the repo       | Run in the browser                        |
+| ------- | ----------------------------------------------- | -------------------------------- | ----------------------------------------- |
+| 2.1     | Spatial violation: writing beyond buffer bounds | `chapter2/demos/listing_2_1.cpp` | [godbolt](https://godbolt.org/z/qbM698h5v) |
+| 2.2     | Bounds checking to prevent spatial violations   | `chapter2/demos/listing_2_2.cpp` | [godbolt](https://godbolt.org/z/Mhzv99n9z) |
+| 2.3     | Temporal violation: accessing freed memory      | `chapter2/demos/listing_2_3.cpp` | [godbolt](https://godbolt.org/z/nWGhGW418) |
+| 2.4     | Smart pointers to prevent temporal violations   | `chapter2/demos/listing_2_4.cpp` | [godbolt](https://godbolt.org/z/enG6nos8a) |
+| 2.5     | Combining spatial and temporal checks           | `chapter2/demos/listing_2_5.cpp` | [godbolt](https://godbolt.org/z/zY449ns1n) |
+
+The Compiler Explorer links run the same source on x86-64 gcc 15.2 with
+`-std=c++17 -Wall -Wextra -Wpedantic`, the compiler and flags section
+2.4.2 reports. They need no toolchain, so they are the fastest way to
+check a listing without cloning.
+
+Listing 2.1 shows only a crash there, no `Value:` line, because Compiler
+Explorer captures stdout through a pipe. See below for why that differs
+from a terminal.
 
 Listing 2.5 in the book ends at the `SensorBuffer` class. The demo adds a
 `main()` that drives it through all three paths (in range, out of range,
@@ -62,11 +71,24 @@ Observed here on Ubuntu 24.04 with g++ 15.2.0:
 | `listing_2_1` | Prints a garbage value, then segfaults on return from `main`, exit 139. The two accesses do different damage: `buffer[-1]` produces the value, `buffer[15] = 42` corrupts the stack and kills the process on return. No warning from g++; Clang warns only because the indices are constants. |
 | `listing_2_3` | Exits 0 and prints a different garbage value on every run. No warning from any compiler.                            |
 
-The value 2.1 prints is not stable even on one machine. Five runs on a
-terminal gave 29544, 29003, 32236, 31729, 29993. The same binary with
-stdout redirected to a pipe printed `Value: 0` every time, because the
-stack slot before the array holds whatever the process left there during
-startup, and that differs when stdout is not a terminal.
+Listing 2.1 prints three different things on the same machine depending
+on where stdout goes.
+
+| stdout                    | Output                                     |
+| ------------------------- | ------------------------------------------ |
+| A terminal                | `Value: 31122`, a different number each run |
+| A pipe, default buffering | Nothing                                    |
+| A pipe, unbuffered        | `Value: 0`, the same each run              |
+
+Exit status is 139 in all three cases. The value varies because
+`buffer[-1]` reads a stack slot holding whatever startup left there, and
+that differs with the buffering mode. The line disappears on a pipe
+because `std::cout` is fully buffered there, and the buffer is still
+unflushed when `buffer[15] = 42` kills the process on return from
+`main`.
+
+Compiler Explorer and CI logs both capture stdout through a pipe, so
+both show the crash with no output.
 
 Because the behaviour is undefined, these are demonstrated with a sanitizer
 rather than a unit test. A test that reads freed memory is itself undefined.
