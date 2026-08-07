@@ -1,0 +1,15 @@
+module(
+    name = "ch3_flood_fill",
+    version = "1.0.0",
+)
+
+bazel_dep(name = "rules_cc", version = "0.2.16")
+bazel_dep(name = "rules_shell", version = "0.6.0")
+bazel_dep(name = "googletest", version = "1.15.2")
+bazel_dep(name = "bazel_clang_tidy", dev_dependency = True)
+
+git_override(
+    module_name = "bazel_clang_tidy",
+    remote = "https://github.com/erenon/bazel_clang_tidy.git",
+    commit = "c4d35e0d0b838309358e57a2efed831780f85cd0",
+)

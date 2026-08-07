@@ -1,0 +1,108 @@
+# clang-tidy configuration for the chapter 3 flood-fill case study.
+#
+# Selection rationale lives in the chat record next to this commit and
+# in the relevant chapter sections (chapter3_draft.md §3.1.2, §3.2.4,
+# §3.3.1, §3.3.2). The short version:
+#
+#   * Tier 1 checks (the ones whose firing or non-firing is the lesson)
+#     are misc-no-recursion, modernize-use-nodiscard,
+#     cppcoreguidelines-avoid-non-const-global-variables. They are NOT
+#     suppressed globally; they are suppressed at specific lines via
+#     NOLINTNEXTLINE with a chapter section reference, so the
+#     suppression sites become reviewable documentation.
+#
+#   * Tier 2 hygiene checks are enabled wholesale through the "*"
+#     prefixes below.
+#
+#   * Tier 3 disables (the trailing "-name" entries) are checks that
+#     would fire on this codebase by stylistic choice rather than by
+#     defect.
+#
+#   * Tier 4 (off-topic check categories - abseil/android/boost/etc.)
+#     stays off because the leading "-*" disables everything that the
+#     enabled prefixes do not pull back in.
+
+Checks: >
+  -*,
+  bugprone-*,
+  cert-*,
+  concurrency-*,
+  cppcoreguidelines-*,
+  misc-*,
+  modernize-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  -bugprone-easily-swappable-parameters,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -cppcoreguidelines-pro-bounds-constant-array-index,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-avoid-c-arrays,
+  -modernize-use-trailing-return-type,
+  -modernize-avoid-c-arrays,
+  -readability-identifier-length,
+  -readability-magic-numbers,
+  -portability-simd-intrinsics
+
+# Treat every clang-tidy warning as a build failure. Drift is caught
+# the moment it lands rather than accumulating until someone notices.
+WarningsAsErrors: '*'
+HeaderFilterRegex: 'chapter[0-9]+/(include|src)/.*\.h$'
+FormatStyle: file
+
+CheckOptions:
+  # The flood-fill loops are unavoidably nested. Default threshold of
+  # 25 is too tight for the iterative DFS/BFS bodies; bump to 30.
+  - key: readability-function-cognitive-complexity.Threshold
+    value: '30'
+
+  # OccupancyGrid is a POD aggregate by design - width, height, and
+  # cells are all public on purpose. This option makes the check
+  # ignore structs where every field is public, which is exactly the
+  # POD pattern.
+  - key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic
+    value: 'true'
+
+  # We use std::uint8_t for cell states deliberately. The book is
+  # explicit about this choice (chapter 3 PART I); fixed-width types
+  # are the right answer for storage encodings.
+  - key: google-runtime-int.UnsignedTypePrefix
+    value: 'std::uint'
+
+  # Identifier naming - Google C++ Style Guide
+  # https://google.github.io/styleguide/cppguide.html#Naming
+  #
+  # Tailored to the actual conventions in this repo: public POD struct
+  # members use bare lower_case (no trailing underscore); private/
+  # protected class members use lower_case with a trailing underscore;
+  # global mutable variables (used by the iterative worklist solutions)
+  # use a `g_` prefix and lower_case.
+  - { key: readability-identifier-naming.NamespaceCase,           value: lower_case }
+  - { key: readability-identifier-naming.ClassCase,               value: CamelCase  }
+  - { key: readability-identifier-naming.StructCase,              value: CamelCase  }
+  - { key: readability-identifier-naming.EnumCase,                value: CamelCase  }
+  - { key: readability-identifier-naming.TypedefCase,             value: CamelCase  }
+  - { key: readability-identifier-naming.TypeAliasCase,           value: CamelCase  }
+  - { key: readability-identifier-naming.TemplateParameterCase,   value: CamelCase  }
+  - { key: readability-identifier-naming.FunctionCase,            value: camelBack  }
+  - { key: readability-identifier-naming.MethodCase,              value: camelBack  }
+  - { key: readability-identifier-naming.VariableCase,            value: lower_case }
+  - { key: readability-identifier-naming.ParameterCase,           value: lower_case }
+  - { key: readability-identifier-naming.LocalVariableCase,       value: lower_case }
+  - { key: readability-identifier-naming.PublicMemberCase,        value: lower_case }
+  - { key: readability-identifier-naming.PrivateMemberCase,       value: lower_case }
+  - { key: readability-identifier-naming.PrivateMemberSuffix,     value: _          }
+  - { key: readability-identifier-naming.ProtectedMemberCase,     value: lower_case }
+  - { key: readability-identifier-naming.ProtectedMemberSuffix,   value: _          }
+  - { key: readability-identifier-naming.ConstexprVariableCase,   value: CamelCase  }
+  - { key: readability-identifier-naming.ConstexprVariablePrefix, value: k          }
+  - { key: readability-identifier-naming.GlobalConstantCase,      value: CamelCase  }
+  - { key: readability-identifier-naming.GlobalConstantPrefix,    value: k          }
+  - { key: readability-identifier-naming.StaticConstantCase,      value: CamelCase  }
+  - { key: readability-identifier-naming.StaticConstantPrefix,    value: k          }
+  - { key: readability-identifier-naming.EnumConstantCase,        value: CamelCase  }
+  - { key: readability-identifier-naming.EnumConstantPrefix,      value: k          }
+  - { key: readability-identifier-naming.GlobalVariableCase,      value: lower_case }
+  - { key: readability-identifier-naming.GlobalVariablePrefix,    value: g_         }
+  - { key: readability-identifier-naming.StaticVariableCase,      value: lower_case }
+  - { key: readability-identifier-naming.StaticVariablePrefix,    value: g_         }

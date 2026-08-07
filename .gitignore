@@ -1,0 +1,30 @@
+# Author-only documentation (working notes, internal references)
+_author/
+
+# Bazel - build outputs and convenience symlinks
+bazel-*
+/MODULE.bazel.lock
+
+# CMake - this repo uses Bazel, but readers / IDEs (CLion, VSCode with
+# CMake Tools) may generate these directories. Ignored defensively.
+build-out/
+cmake-out/
+cmake-build-*/
+.build/
+
+# Stack-usage files emitted by -fstack-usage
+*.su
+
+# Compilation database (regenerate locally as needed)
+compile_commands.json
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS metadata
+.DS_Store
+Thumbs.db

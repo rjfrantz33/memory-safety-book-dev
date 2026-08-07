@@ -1,0 +1,85 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+# Public header libraries for chapter 3. One cc_library per header so
+# consumers depend on exactly what they need.
+
+package(default_visibility = ["//chapter3:__subpackages__"])
+
+cc_library(
+    name = "types",
+    hdrs = ["types.h"],
+    includes = ["."],
+)
+
+cc_library(
+    name = "occupancy_grid",
+    hdrs = ["occupancy_grid.h"],
+    includes = ["."],
+    deps = [":types"],
+)
+
+cc_library(
+    name = "flood_fill_recursive_hdr",
+    hdrs = ["flood_fill/recursive.h"],
+    includes = ["."],
+    deps = [":occupancy_grid"],
+)
+
+cc_library(
+    name = "flood_fill_bounded_hdr",
+    hdrs = ["flood_fill/bounded.h"],
+    includes = ["."],
+    deps = [
+        ":occupancy_grid",
+        ":types",
+    ],
+)
+
+cc_library(
+    name = "flood_fill_iterative_dfs_hdr",
+    hdrs = ["flood_fill/iterative_dfs.h"],
+    includes = ["."],
+    deps = [
+        ":occupancy_grid",
+        ":types",
+    ],
+)
+
+cc_library(
+    name = "flood_fill_iterative_bfs_hdr",
+    hdrs = ["flood_fill/iterative_bfs.h"],
+    includes = ["."],
+    deps = [
+        ":occupancy_grid",
+        ":types",
+    ],
+)
+
+cc_library(
+    name = "worklist_buffer_hdr",
+    hdrs = ["worklist_buffer.h"],
+    includes = ["."],
+    deps = [":types"],
+)
+
+cc_library(
+    name = "flood_fill_iterative_dfs_buffered_hdr",
+    hdrs = ["flood_fill/iterative_dfs_buffered.h"],
+    includes = ["."],
+    deps = [
+        ":occupancy_grid",
+        ":types",
+        ":worklist_buffer_hdr",
+    ],
+)
+
+cc_library(
+    name = "flood_fill_iterative_bfs_buffered_hdr",
+    hdrs = ["flood_fill/iterative_bfs_buffered.h"],
+    includes = ["."],
+    deps = [
+        ":occupancy_grid",
+        ":types",
+        ":worklist_buffer_hdr",
+    ],
+)

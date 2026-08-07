@@ -1,0 +1,28 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+# Internal-only impls for chapter 3 flood-fill. Visibility restricted
+# to the demos and tests that legitimately need them.
+
+package(default_visibility = [
+    "//chapter3/demos:__pkg__",
+    "//chapter3/test/flood_fill:__pkg__",
+])
+
+cc_library(
+    name = "depth_observer",
+    hdrs = ["depth_observer.h"],
+    includes = ["../.."],
+)
+
+cc_library(
+    name = "recursive_instrumented",
+    srcs = ["recursive_instrumented.cpp"],
+    hdrs = ["recursive_instrumented.h"],
+    includes = ["../.."],
+    deps = [
+        ":depth_observer",
+        "//chapter3/include:occupancy_grid",
+        "//chapter3/include:types",
+        "//chapter3/src:occupancy_grid",
+    ],
+)

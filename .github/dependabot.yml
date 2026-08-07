@@ -1,0 +1,13 @@
+version: 2
+
+updates:
+  # Keep GitHub Actions versions current. Auto-opens PRs when
+  # actions/checkout, bazel-contrib/setup-bazel, etc. release a new
+  # major or minor version. Without this, action versions silently
+  # drift and eventually trigger deprecation warnings (e.g., the
+  # Node.js 20 deprecation that started appearing in CI logs).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5

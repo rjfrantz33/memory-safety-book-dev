@@ -1,0 +1,13 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+# Chapter 3 core-data-type tests. Algorithm tests are under flood_fill/.
+
+cc_test(
+    name = "occupancy_grid_test",
+    size = "small",
+    srcs = ["occupancy_grid_test.cpp"],
+    deps = [
+        "//chapter3/src:occupancy_grid",
+        "@googletest//:gtest_main",
+    ],
+)

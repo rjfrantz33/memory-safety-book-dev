@@ -1,0 +1,21 @@
+# Code formatting for the Memory Safety in Safety-Critical C++ book.
+#
+# Tailored to match the existing code style in this repo. Run
+# `clang-format -i <files>` to reformat. Editor integrations or a
+# pre-commit hook keep this mechanical.
+#
+# Choices that diverge from upstream Google style are commented inline.
+
+BasedOnStyle: Google
+
+# `int& foo` not `int &foo`. Matches existing code.
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# West const (`const int x`), not east const (`int const x`).
+# Matches existing code; switching to east const would rewrite
+# every `const T` declaration in the repo.
+QualifierAlignment: Left
+
+# Doxygen tags should not be reflowed by the formatter.
+CommentPragmas: '@(file|brief|param|return|warning|note|see|nodiscard|ref)'

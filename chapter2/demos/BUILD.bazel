@@ -1,0 +1,44 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+# Chapter 2 demo binaries. One target per book listing; each listing is a
+# self-contained main() with no shared library behind it, so there is no
+# include/ or src/ in this chapter.
+#
+# Every target carries no-clang-tidy. These files reproduce the listings as
+# the book prints them, and the lint pass would require diverging from that
+# text: misc-const-correctness wants `const` on the locals in 2.1 through
+# 2.4, and cppcoreguidelines-owning-memory objects to the raw new/delete in
+# 2.3, which is the violation the listing exists to show. Chapters 3 onward
+# are held to the full lint pass.
+
+package(default_visibility = ["//chapter2:__subpackages__"])
+
+cc_binary(
+    name = "listing_2_1",
+    srcs = ["listing_2_1.cpp"],
+    tags = ["no-clang-tidy"],
+)
+
+cc_binary(
+    name = "listing_2_2",
+    srcs = ["listing_2_2.cpp"],
+    tags = ["no-clang-tidy"],
+)
+
+cc_binary(
+    name = "listing_2_3",
+    srcs = ["listing_2_3.cpp"],
+    tags = ["no-clang-tidy"],
+)
+
+cc_binary(
+    name = "listing_2_4",
+    srcs = ["listing_2_4.cpp"],
+    tags = ["no-clang-tidy"],
+)
+
+cc_binary(
+    name = "listing_2_5",
+    srcs = ["listing_2_5.cpp"],
+    tags = ["no-clang-tidy"],
+)

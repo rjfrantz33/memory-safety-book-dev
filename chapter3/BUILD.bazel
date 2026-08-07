@@ -1,0 +1,23 @@
+# Compliance scope for chapter 3.
+#
+# Pulls every chapter 3 demo binary's transitive closure into the BDF
+# so a single Parasoft scan against `//chapter3:misra_scope` covers
+# every source file the chapter ships:
+#   - main_solutions.cpp + the bounded/iterative/buffered flood-fill libs
+#   - main_original.cpp  + the recursive counter-example library
+#   - main_instrumented.cpp + the depth_observer and recursive_instrumented libs
+#
+# Add new demo binaries here as they land. Removing a target shrinks the
+# scope: anything not transitively reachable from one of these labels
+# does not get analyzed.
+
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "misra_scope",
+    srcs = [
+        "//chapter3/demos:instrumented",
+        "//chapter3/demos:original",
+        "//chapter3/demos:solutions",
+    ],
+)

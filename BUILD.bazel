@@ -1,0 +1,7 @@
+# Root package - targets live in subpackages.
+
+filegroup(
+    name = "clang_tidy_config",
+    srcs = [".clang-tidy"],
+    visibility = ["//visibility:public"],
+)

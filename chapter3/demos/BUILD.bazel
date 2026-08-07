@@ -1,0 +1,42 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+# Chapter 3 demo binaries. Thin drivers around the library targets.
+
+package(default_visibility = ["//chapter3:__subpackages__"])
+
+cc_binary(
+    name = "original",
+    srcs = ["main_original.cpp"],
+    deps = [
+        "//chapter3/src:flood_fill_recursive",
+        "//chapter3/src:occupancy_grid",
+        "//chapter3/include:types",
+    ],
+)
+
+cc_binary(
+    name = "instrumented",
+    srcs = ["main_instrumented.cpp"],
+    deps = [
+        "//chapter3/src:occupancy_grid",
+        "//chapter3/src/flood_fill/internal:depth_observer",
+        "//chapter3/src/flood_fill/internal:recursive_instrumented",
+        "//chapter3/include:types",
+    ],
+)
+
+cc_binary(
+    name = "solutions",
+    srcs = ["main_solutions.cpp"],
+    deps = [
+        "//chapter3/src:flood_fill_bounded",
+        "//chapter3/src:flood_fill_iterative_bfs",
+        "//chapter3/src:flood_fill_iterative_bfs_buffered",
+        "//chapter3/src:flood_fill_iterative_dfs",
+        "//chapter3/src:flood_fill_iterative_dfs_buffered",
+        "//chapter3/src:occupancy_grid",
+        "//chapter3/include:types",
+        "//chapter3/include:worklist_buffer_hdr",
+        "//common:type_aliases",
+    ],
+)

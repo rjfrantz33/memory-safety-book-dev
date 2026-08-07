@@ -1,0 +1,117 @@
+# Auto-apply build:linux / build:macos / build:windows based on host OS.
+common --enable_platform_specific_config
+
+# Linux: GCC. Full strict warning set.
+build:linux --cxxopt=-std=c++17
+build:linux --host_cxxopt=-std=c++17
+build:linux --cxxopt=-Wall
+build:linux --cxxopt=-Wextra
+build:linux --cxxopt=-Wpedantic
+build:linux --cxxopt=-Wdisabled-optimization
+build:linux --cxxopt=-Winit-self
+build:linux --cxxopt=-Wnon-virtual-dtor
+build:linux --cxxopt=-Wold-style-cast
+build:linux --cxxopt=-Woverloaded-virtual
+build:linux --cxxopt=-Wparentheses
+build:linux --cxxopt=-Wredundant-decls
+build:linux --cxxopt=-Wunused
+build:linux --cxxopt=-Wmisleading-indentation
+build:linux --cxxopt=-Wnull-dereference
+build:linux --cxxopt=-Wformat=2
+build:linux --cxxopt=-Wimplicit-fallthrough
+build:linux --cxxopt=-Wshadow
+build:linux --cxxopt=-Wsign-promo
+build:linux --cxxopt=-Wstrict-aliasing
+build:linux --cxxopt=-Wconversion
+build:linux --cxxopt=-Wsign-conversion
+build:linux --cxxopt=-Wcast-align
+build:linux --cxxopt=-Wlogical-op
+build:linux --cxxopt=-Wduplicated-cond
+build:linux --cxxopt=-Wduplicated-branches
+build:linux --cxxopt=-fstack-usage
+
+# macOS: Apple Clang. Same flags except the GCC-only ones.
+build:macos --cxxopt=-std=c++17
+build:macos --host_cxxopt=-std=c++17
+build:macos --cxxopt=-Wall
+build:macos --cxxopt=-Wextra
+build:macos --cxxopt=-Wpedantic
+build:macos --cxxopt=-Winit-self
+build:macos --cxxopt=-Wnon-virtual-dtor
+build:macos --cxxopt=-Wold-style-cast
+build:macos --cxxopt=-Woverloaded-virtual
+build:macos --cxxopt=-Wparentheses
+build:macos --cxxopt=-Wredundant-decls
+build:macos --cxxopt=-Wunused
+build:macos --cxxopt=-Wmisleading-indentation
+build:macos --cxxopt=-Wnull-dereference
+build:macos --cxxopt=-Wformat=2
+build:macos --cxxopt=-Wimplicit-fallthrough
+build:macos --cxxopt=-Wshadow
+build:macos --cxxopt=-Wsign-promo
+build:macos --cxxopt=-Wstrict-aliasing
+build:macos --cxxopt=-Wconversion
+build:macos --cxxopt=-Wsign-conversion
+build:macos --cxxopt=-Wcast-align
+build:macos --cxxopt=-fstack-usage
+
+# Windows: MSVC. Different flag syntax entirely.
+build:windows --cxxopt=/std:c++17
+build:windows --host_cxxopt=/std:c++17
+build:windows --cxxopt=/W4
+build:windows --cxxopt=/permissive-
+# /external:I (emitted by --features=external_include_paths) is
+# silently ignored unless /external:W<n> is also set. W0 = no warnings
+# for external code, matching the intent of treating external headers
+# as system headers.
+build:windows --cxxopt=/external:W0
+
+# clang-tidy: run with `bazel build //... --config=clang-tidy`
+build:clang-tidy --aspects @bazel_clang_tidy//clang_tidy:clang_tidy.bzl%clang_tidy_aspect
+build:clang-tidy --output_groups=report
+build:clang-tidy --@bazel_clang_tidy//:clang_tidy_config=//:clang_tidy_config
+build:clang-tidy --@bazel_clang_tidy//:clang_tidy_executable=//tools:clang_tidy
+
+# Test environment: random test order surfaces order-dependent test bugs.
+test --test_env=GTEST_SHUFFLE
+test --test_env=GTEST_RANDOM_SEED
+
+# External dependencies: treat external headers as system headers so
+# warnings from gtest etc. do not drown out warnings from chapter code.
+build --features=external_include_paths
+build --output_filter='^//((?!(external):).)*$'
+
+# Long-running builds should not truncate output.
+build --experimental_ui_max_stdouterr_bytes=-1
+
+# === Sanitizers (opt-in via --config=asan / --config=ubsan / --config=tsan) ===
+# Common settings shared across sanitizer configs: keep symbols, light
+# optimization, and frame pointers so stack traces in sanitizer output
+# remain readable.
+build:sanitizer --strip=never
+build:sanitizer --copt=-Og
+build:sanitizer --copt=-g
+build:sanitizer --copt=-fno-omit-frame-pointer
+
+# AddressSanitizer: heap buffer overflows, use-after-free, double-free,
+# and (with detect_leaks=1) memory leaks.
+build:asan --config=sanitizer
+build:asan --copt=-fsanitize=address
+build:asan --linkopt=-fsanitize=address
+build:asan --action_env=ASAN_OPTIONS=detect_leaks=1:color=always
+build:asan --action_env=LSAN_OPTIONS=report_objects=1
+
+# UndefinedBehaviorSanitizer: signed integer overflow, null pointer
+# dereference, misaligned access, bad enum/bool values, and others.
+build:ubsan --config=sanitizer
+build:ubsan --copt=-fsanitize=undefined
+build:ubsan --linkopt=-fsanitize=undefined
+build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
+
+# ThreadSanitizer: data races, deadlocks. Useful once chapters introduce
+# concurrency. report_atomic_races=0 silences a known TSAN false-positive
+# on C++ atomics (https://github.com/google/sanitizers/issues/953).
+build:tsan --config=sanitizer
+build:tsan --copt=-fsanitize=thread
+build:tsan --linkopt=-fsanitize=thread
+build:tsan --action_env=TSAN_OPTIONS=halt_on_error=1:second_deadlock_stack=1:report_atomic_races=0

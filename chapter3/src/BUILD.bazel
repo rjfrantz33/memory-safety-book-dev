@@ -1,0 +1,76 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+# Chapter 3 implementations. One cc_library per algorithm variant.
+
+package(default_visibility = ["//chapter3:__subpackages__"])
+
+cc_library(
+    name = "occupancy_grid",
+    srcs = ["occupancy_grid.cpp"],
+    deps = [
+        "//chapter3/include:occupancy_grid",
+        "//chapter3/include:types",
+    ],
+)
+
+cc_library(
+    name = "flood_fill_recursive",
+    srcs = ["flood_fill/recursive.cpp"],
+    deps = [
+        ":occupancy_grid",
+        "//chapter3/include:flood_fill_recursive_hdr",
+        "//chapter3/include:types",
+    ],
+)
+
+cc_library(
+    name = "flood_fill_bounded",
+    srcs = ["flood_fill/bounded.cpp"],
+    deps = [
+        ":occupancy_grid",
+        "//chapter3/include:flood_fill_bounded_hdr",
+        "//chapter3/include:types",
+    ],
+)
+
+cc_library(
+    name = "flood_fill_iterative_dfs",
+    srcs = ["flood_fill/iterative_dfs.cpp"],
+    deps = [
+        ":occupancy_grid",
+        "//chapter3/include:flood_fill_iterative_dfs_hdr",
+        "//chapter3/include:types",
+    ],
+)
+
+cc_library(
+    name = "flood_fill_iterative_bfs",
+    srcs = ["flood_fill/iterative_bfs.cpp"],
+    deps = [
+        ":occupancy_grid",
+        "//chapter3/include:flood_fill_iterative_bfs_hdr",
+        "//chapter3/include:types",
+    ],
+)
+
+cc_library(
+    name = "flood_fill_iterative_dfs_buffered",
+    srcs = ["flood_fill/iterative_dfs_buffered.cpp"],
+    deps = [
+        ":occupancy_grid",
+        "//chapter3/include:flood_fill_iterative_dfs_buffered_hdr",
+        "//chapter3/include:types",
+        "//chapter3/include:worklist_buffer_hdr",
+    ],
+)
+
+cc_library(
+    name = "flood_fill_iterative_bfs_buffered",
+    srcs = ["flood_fill/iterative_bfs_buffered.cpp"],
+    deps = [
+        ":occupancy_grid",
+        "//chapter3/include:flood_fill_iterative_bfs_buffered_hdr",
+        "//chapter3/include:types",
+        "//chapter3/include:worklist_buffer_hdr",
+    ],
+)

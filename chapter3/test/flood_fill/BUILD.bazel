@@ -1,0 +1,76 @@
+load("@rules_cc//cc:defs.bzl", "cc_test")
+
+# Chapter 3 flood-fill tests, one cc_test per algorithm.
+
+cc_test(
+    name = "recursive_test",
+    size = "small",
+    srcs = ["recursive_test.cpp"],
+    deps = [
+        "//chapter3/src:flood_fill_recursive",
+        "//chapter3/src:occupancy_grid",
+        "//chapter3/src/flood_fill/internal:depth_observer",
+        "//chapter3/src/flood_fill/internal:recursive_instrumented",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "bounded_test",
+    size = "small",
+    srcs = ["bounded_test.cpp"],
+    deps = [
+        "//chapter3/src:flood_fill_bounded",
+        "//chapter3/src:occupancy_grid",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "iterative_dfs_test",
+    size = "small",
+    srcs = ["iterative_dfs_test.cpp"],
+    deps = [
+        "//chapter3/src:flood_fill_iterative_dfs",
+        "//chapter3/src:occupancy_grid",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "iterative_bfs_test",
+    size = "small",
+    srcs = ["iterative_bfs_test.cpp"],
+    deps = [
+        "//chapter3/src:flood_fill_iterative_bfs",
+        "//chapter3/src:flood_fill_iterative_dfs",
+        "//chapter3/src:occupancy_grid",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "iterative_dfs_buffered_test",
+    size = "small",
+    srcs = ["iterative_dfs_buffered_test.cpp"],
+    deps = [
+        "//chapter3/src:flood_fill_iterative_dfs",
+        "//chapter3/src:flood_fill_iterative_dfs_buffered",
+        "//chapter3/src:occupancy_grid",
+        "//chapter3/include:worklist_buffer_hdr",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "iterative_bfs_buffered_test",
+    size = "small",
+    srcs = ["iterative_bfs_buffered_test.cpp"],
+    deps = [
+        "//chapter3/src:flood_fill_iterative_bfs",
+        "//chapter3/src:flood_fill_iterative_bfs_buffered",
+        "//chapter3/src:occupancy_grid",
+        "//chapter3/include:worklist_buffer_hdr",
+        "@googletest//:gtest_main",
+    ],
+)

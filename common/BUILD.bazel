@@ -1,0 +1,14 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+# Cross-chapter shared headers. Public so every chapter's demo and
+# library targets can depend on them without per-chapter visibility
+# changes.
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "type_aliases",
+    hdrs = ["type_aliases.h"],
+    strip_include_prefix = "/common",
+    include_prefix = "common",
+)
